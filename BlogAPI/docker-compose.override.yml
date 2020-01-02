@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:9.5
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - /Users/IovanSB/Documents/PROJETOAPI/BlogAPI_GoF/BlogAPI/Docker-Compose/PostgreSQL:/var/lib/postgresql/data 
+    networks:
+      - blog-api-network
+      
+  db-pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "iovan.barros@globalweb.com.br"
+      PGADMIN_DEFAULT_PASSWORD: "postgres"
+    ports:
+      - "16543:80"
+    depends_on:
+      - db
+    networks:
+      - blog-api-network
+
+  blogapi:
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      DATABASE_CONN: Host=db;Port=5432;Database=postgres;User Id=postgres;Password=postgres;
+    ports:
+      - "80"
+    networks:
+      - blog-api-network
+
+volumes:
+  pgdata:
+  pgservers:
+
+networks:
+  blog-api-network:

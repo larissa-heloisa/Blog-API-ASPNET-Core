@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:   
+  blogapi:
+    image: ${DOCKER_REGISTRY-}blogapi
+    build:
+      context: .
+      dockerfile: BlogAPI/Dockerfile  
+    networks:
+      - blog-api-network 
+
+volumes:
+  pgdata:
+  pgservers:
+
+networks:
+  blog-api-network:
